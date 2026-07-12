@@ -12,13 +12,14 @@
 | 2026-07-11 | **STORY-1.1** entregue e aprovada no gate (PASS): validador estrutural `scripts/validate.cjs` (FR-5), 18 verificações, zero deps, testado com violação plantada (AC-8) |
 | 2026-07-11 | Instalação do plugin (FR-1): `.claude-plugin/marketplace.json` criado; plugin instalado via marketplace local e verificado pelo CLI (5 skills, 6 agentes, 1 hook, ~887 tok always-on) |
 | 2026-07-12 | **STORY-1.2** entregue e aprovada no gate (PASS pelo `forge360:reviewer` nativo): hook `hooks/gate-enforcer.cjs` (FR-6 / Art. III) — push autorizado exige story em entrega com veredito PASS/CONCERNS; override de emergência `FORGE_GATE_OVERRIDE=1`; 6 ACs testados. Validador em 19 verificações |
+| 2026-07-12 | **STORY-1.3** entregue e aprovada no gate (PASS): skill `skills/onboarding/SKILL.md` (FR-7) — bootstrap de projeto de cliente (3 arquivos de gestão + docs/stories/ + CLAUDE.md ≤40 linhas), idempotente e com proteção anti-recursão. Validador em 20 verificações |
+| 2026-07-12 | **Release v0.2 fechada** — Épico 1 completo (1.1+1.2+1.3); método validado por dogfooding (cadeia builder→reviewer→shipper + governança push-authority/gate-enforcer rodando sobre o próprio plugin) |
 
 ## 🔲 Pendente
 
 | Prioridade | Item | Dependências |
 |---|---|---|
-| 1 | Implementar STORY-1.3 (/onboarding) — fecha a release v0.2 | 1.1 ✅ |
-| 2 | Piloto do fluxo SDC (FR-9, v0.3) | v0.2 |
+| 1 | Piloto do fluxo SDC (FR-9, v0.3) em projeto de cliente | v0.2 ✅ |
 | 3 | Piloto da skill /economia em projeto real | — |
 | 4 | Repositório remoto e versionamento de releases | decisão do Helder |
 | 5 | Templates de gestão aplicados a novo projeto de cliente | piloto ok |
@@ -29,4 +30,5 @@
 - Hook de gate-enforcer: bloquear push se a story alvo não tem veredito PASS/CONCERNS registrado.
 - Avaliar suporte a `fable` como modelo opcional do planner para épicos longos (custo 2× opus — só sob demanda explícita).
 - `/economia` poderia gerar Artifact visual com o relatório para apresentação a cliente.
-- `validate.cjs`: `verificarHooks()` só varre `PreToolUse`. Quando stories 1.2/1.3 registrarem hooks sob outros eventos (`PostToolUse`, `Stop`…), generalizar a varredura para todos os eventos de `hooks.json` (existência + `node --check`). Observação do gate da STORY-1.1.
+- `validate.cjs`: `verificarHooks()` só varre `PreToolUse`. Quando um hook for registrado sob outro evento (`PostToolUse`, `Stop`…), generalizar a varredura para todos os eventos de `hooks.json` (existência + `node --check`). Observação do gate da STORY-1.1.
+- `/onboarding`: o fallback de localização dos templates sem `${CLAUDE_PLUGIN_ROOT}` está descrito em alto nível — detalhar o passo a passo (via `claude plugin list`) quando validado num projeto de cliente real. Ressalva do gate da STORY-1.3.
