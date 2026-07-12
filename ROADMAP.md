@@ -32,3 +32,4 @@
 - `/economia` poderia gerar Artifact visual com o relatório para apresentação a cliente.
 - `validate.cjs`: `verificarHooks()` só varre `PreToolUse`. Quando um hook for registrado sob outro evento (`PostToolUse`, `Stop`…), generalizar a varredura para todos os eventos de `hooks.json` (existência + `node --check`). Observação do gate da STORY-1.1.
 - `/onboarding`: o fallback de localização dos templates sem `${CLAUDE_PLUGIN_ROOT}` está descrito em alto nível — detalhar o passo a passo (via `claude plugin list`) quando validado num projeto de cliente real. Ressalva do gate da STORY-1.3.
+- `docs/economia.md`: adicionar alerta explícito de que **preço de Batch (−50%) ≠ preço padrão** — a auditoria mensal quase gerou falso positivo ao comparar preço padrão do arquivo com preço de Batch retornado por busca web. Ancorar sempre na página oficial de pricing (input/output padrão), não em resumos de busca. (Achado da auditoria de 2026-07-12.)
