@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-STORY-1.1 **entregue e aprovada no gate (PASS)**: validador estrutural `scripts/validate.cjs` (FR-5) — 18 verificações, zero deps. Plugin instalado localmente via marketplace (`.claude-plugin/marketplace.json`) e verificado pelo CLI (5 skills, 6 agentes, 1 hook). Base pronta para as stories 1.2 (gate-enforcer) e 1.3 (/onboarding), que dependiam da 1.1.
+Épico 1 (v0.2) 2/3 entregue e aprovado em gate (PASS): **STORY-1.1** (validador `scripts/validate.cjs`, FR-5) e **STORY-1.2** (hook `gate-enforcer.cjs`, FR-6 / Art. III — push exige story com gate registrado). Plugin instalado e **carregado** (skills e 6 agentes forge360 ativos nesta sessão; gate rodado com o `forge360:reviewer` nativo). Validador em 19 verificações, zero deps. Falta a STORY-1.3 (/onboarding) para fechar a v0.2.
 
 ## Em andamento
 
@@ -10,7 +10,6 @@ STORY-1.1 **entregue e aprovada no gate (PASS)**: validador estrutural `scripts/
 
 ## Pendente (ordem de prioridade)
 
-- [ ] **STORY-1.2** — Hook gate-enforcer (FR-6) — desbloqueada pela 1.1 — `docs/stories/1.2.story.md`
 - [ ] **STORY-1.3** — Skill /onboarding (FR-7) — desbloqueada pela 1.1 — `docs/stories/1.3.story.md`
 - [ ] Piloto SDC completo (FR-9, release v0.3)
 - [ ] Piloto da skill /economia em projeto real
@@ -21,4 +20,4 @@ STORY-1.1 **entregue e aprovada no gate (PASS)**: validador estrutural `scripts/
 
 ## Próxima sessão
 
-Reiniciar o Claude Code **neste diretório** para carregar o plugin instalado (skills/agentes forge360 passam a existir na interface). Implementar na ordem: STORY-1.2 → 1.3 (ambas `Ready`, agora desbloqueadas). Ler CLAUDE.md → PRD → story. Ao final de cada story: `/gate` (reviewer) + atualização de gestão no mesmo commit.
+Implementar **STORY-1.3** (skill /onboarding, FR-7) — fecha a release v0.2. Ler CLAUDE.md → PRD → story. Fluxo: `/sdc` ou builder → `/gate` (forge360:reviewer) → shipper. Atualização de gestão no mesmo commit do código.

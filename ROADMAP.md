@@ -11,12 +11,13 @@
 | 2026-07-11 | Épico 1 (v0.2): stories 1.1 (validador estrutural), 1.2 (gate-enforcer) e 1.3 (/onboarding) criadas e validadas — todas Ready (scores 9/8/8) |
 | 2026-07-11 | **STORY-1.1** entregue e aprovada no gate (PASS): validador estrutural `scripts/validate.cjs` (FR-5), 18 verificações, zero deps, testado com violação plantada (AC-8) |
 | 2026-07-11 | Instalação do plugin (FR-1): `.claude-plugin/marketplace.json` criado; plugin instalado via marketplace local e verificado pelo CLI (5 skills, 6 agentes, 1 hook, ~887 tok always-on) |
+| 2026-07-12 | **STORY-1.2** entregue e aprovada no gate (PASS pelo `forge360:reviewer` nativo): hook `hooks/gate-enforcer.cjs` (FR-6 / Art. III) — push autorizado exige story em entrega com veredito PASS/CONCERNS; override de emergência `FORGE_GATE_OVERRIDE=1`; 6 ACs testados. Validador em 19 verificações |
 
 ## 🔲 Pendente
 
 | Prioridade | Item | Dependências |
 |---|---|---|
-| 1 | Implementar stories 1.2–1.3 (release v0.2: gate-enforcer, /onboarding) | 1.1 ✅ (desbloqueadas) |
+| 1 | Implementar STORY-1.3 (/onboarding) — fecha a release v0.2 | 1.1 ✅ |
 | 2 | Piloto do fluxo SDC (FR-9, v0.3) | v0.2 |
 | 3 | Piloto da skill /economia em projeto real | — |
 | 4 | Repositório remoto e versionamento de releases | decisão do Helder |
