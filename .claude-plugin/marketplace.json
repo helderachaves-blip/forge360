@@ -1,0 +1,16 @@
+{
+  "name": "forge360",
+  "owner": {
+    "name": "Consultoria 360IA"
+  },
+  "metadata": {
+    "description": "Marketplace interno da CONSULTORIA 360IA para o plugin forge360."
+  },
+  "plugins": [
+    {
+      "name": "forge360",
+      "source": "./",
+      "description": "Método enxuto de desenvolvimento orientado a stories para Claude Code — destilado do AIOX, com economia de tokens por design."
+    }
+  ]
+}

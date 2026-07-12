@@ -27,5 +27,7 @@ Plugin nativo do Claude Code com o método de desenvolvimento da CONSULTORIA 360
 ## Decisões permanentes
 
 - 2026-07-11: nome **forge360** escolhido pelo Helder; local `F:\DADOS\UTEIS\CONSULTORIA_360IA\DEP-TI\CLAUDE\forge360`.
+- 2026-07-11: **remoto definido** — `origin` = https://github.com/helderachaves-blip/forge360.git.
+- 2026-07-11: **instalação** via marketplace local — `.claude-plugin/marketplace.json` (entrada única apontando `source: "./"`); `claude plugin marketplace add <path>` + `claude plugin install forge360@forge360`. Componentes só aparecem na interface após reiniciar a sessão.
 - Metodologia própria em vez de fork do AIOX: agents = subagents nativos; tasks = skills; ~60% do AIOX é compensação histórica de recursos que hoje são nativos.
 - Preços de modelos vivem em `docs/economia.md` (versionado, revisado a cada mudança da Anthropic) — nunca em TXT solto.

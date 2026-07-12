@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-Scaffold v0.1.0 completo + documentação de produto pronta: PRD (`docs/prd.md`), arquitetura (`docs/architecture.md`), CLAUDE.md de sessão e **3 stories Ready** do épico 1 (release v0.2). O projeto está pronto para sessão de implementação com modelo executor (Opus).
+STORY-1.1 **entregue e aprovada no gate (PASS)**: validador estrutural `scripts/validate.cjs` (FR-5) — 18 verificações, zero deps. Plugin instalado localmente via marketplace (`.claude-plugin/marketplace.json`) e verificado pelo CLI (5 skills, 6 agentes, 1 hook). Base pronta para as stories 1.2 (gate-enforcer) e 1.3 (/onboarding), que dependiam da 1.1.
 
 ## Em andamento
 
@@ -10,12 +10,10 @@ Scaffold v0.1.0 completo + documentação de produto pronta: PRD (`docs/prd.md`)
 
 ## Pendente (ordem de prioridade)
 
-- [ ] **STORY-1.1** — Validador estrutural `scripts/validate.cjs` (FR-5) — `docs/stories/1.1.story.md`
-- [ ] **STORY-1.2** — Hook gate-enforcer (FR-6) — depende da 1.1 — `docs/stories/1.2.story.md`
-- [ ] **STORY-1.3** — Skill /onboarding (FR-7) — depende da 1.1 — `docs/stories/1.3.story.md`
-- [ ] Testar instalação do plugin num projeto real (FR-1)
+- [ ] **STORY-1.2** — Hook gate-enforcer (FR-6) — desbloqueada pela 1.1 — `docs/stories/1.2.story.md`
+- [ ] **STORY-1.3** — Skill /onboarding (FR-7) — desbloqueada pela 1.1 — `docs/stories/1.3.story.md`
 - [ ] Piloto SDC completo (FR-9, release v0.3)
-- [ ] Decidir repositório remoto (GitHub) — decisão do Helder
+- [ ] Piloto da skill /economia em projeto real
 
 ## Bloqueios
 
@@ -23,4 +21,4 @@ Scaffold v0.1.0 completo + documentação de produto pronta: PRD (`docs/prd.md`)
 
 ## Próxima sessão
 
-Abrir o Claude Code **neste diretório** e implementar na ordem: STORY-1.1 → 1.2 → 1.3 (todas `Ready`, contexto completo embutido). Ler CLAUDE.md → PRD → story. Ao final de cada story: gate + atualização de gestão no mesmo commit.
+Reiniciar o Claude Code **neste diretório** para carregar o plugin instalado (skills/agentes forge360 passam a existir na interface). Implementar na ordem: STORY-1.2 → 1.3 (ambas `Ready`, agora desbloqueadas). Ler CLAUDE.md → PRD → story. Ao final de cada story: `/gate` (reviewer) + atualização de gestão no mesmo commit.
