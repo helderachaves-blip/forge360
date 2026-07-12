@@ -1,0 +1,61 @@
+
+## 🤖 O que é o Claude Fable 5?
+
+**Claude Fable 5** é o novo modelo da **Anthropic**, lançado em **9 de junho de 2026**. Ele é o primeiro modelo da classe **"Mythos"** — uma tier acima do Opus — projetado para tarefas autônomas de longa duração, como migrações de código em larga escala, sessões agênticas de vários dias e pesquisa profunda.
+
+### 📋 Características principais
+| Feature | Detalhe |
+|---|---|
+| **Contexto** | 1 milhão de tokens |
+| **Output máximo** | 128.000 tokens |
+| **Foco** | Tarefas complexas e autônomas |
+| **Preço (input)** | $10 / milhão de tokens |
+| **Preço (output)** | $50 / milhão de tokens |
+
+---
+
+## 💰 Por que economizar tokens é crítico com o Fable 5?
+
+Com o preço de **$50/MTok de output**, o custo pode escalar rapidamente em tarefas agênticas. As principais estratégias para economizar:
+
+---
+
+## ✅ Estratégias para economizar tokens
+
+### 1. 🗃️ Prompt Caching
+> A técnica **mais eficaz**. Armazena em cache contextos estáveis como system prompts, bases de código, e convenções arquiteturais.
+- Cache hits custam ~**$1/MTok** vs $10/MTok no padrão → **economia de até 90%**
+
+### 2. 🔀 Roteamento por custo (Cost-Aware Routing)
+> Use o Fable 5 **apenas quando necessário**. Para tarefas simples, route para modelos menores como **Sonnet 4.6** (o modelo que estou usando agora).
+```
+Tarefa simples → Sonnet 4.6 (barato)
+Tarefa complexa → Fable 5 (quando necessário)
+```
+
+### 3. 🎯 Context Engineering
+> Em vez de despejar grandes volumes de dados no contexto, **cuide de quais tokens entram**:
+- Use ferramentas como **TokToken** (MCP server) que indexam codebases e recuperam apenas os símbolos/funções necessários → **economia de 88-99% de tokens**
+- Elimine redundâncias e instruções repetidas
+- Separe contexto estático do dinâmico
+
+### 4. 📦 MCP Modularizado
+> O **Model Context Protocol (MCP)** ajuda a "lazy-load" definições de ferramentas e dados externos, evitando **"token bloat"** onde só as definições de tools já consomem grande parte do contexto.
+
+### 5. 📊 Orçamento de tokens (Token Budgets)
+> Modelos de reasoning como o Fable 5 podem gerar **"thought traces"** massivos e caros. Implemente orçamentos por requisição e monitore o output com ferramentas como **Langfuse** ou **CloudZero**.
+
+### 6. 📝 Formatos compactos
+> Substitua JSON verboso por formatos mais compactos (TSV, CSV) para reduzir overhead estrutural de `{}`, `""`, chaves repetidas etc.
+
+---
+
+## 🛠️ Ferramentas recomendadas
+- **Claude Code** — CLI nativo da Anthropic com caching e gerenciamento de contexto embutidos
+- **TokToken** — MCP server que indexa codebase e recupera apenas o necessário
+- **Langfuse / CloudZero** — Observabilidade e rastreamento de gasto por token
+- **LangGraph / LlamaIndex** — Orquestração de camadas de contexto com estratégias de memória
+
+---
+
+Quer que eu aprofunde alguma dessas estratégias ou te ajude a implementar alguma delas no seu projeto? 🚀
