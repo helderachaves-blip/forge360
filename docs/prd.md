@@ -32,10 +32,10 @@ Consultores da 360IA entregam projetos de cliente com **método auditável** (st
 | FR-1 | Plugin instalável via `claude plugin install` com agents, skills e hooks carregando corretamente | v0.2 | validar |
 | FR-2 | 6 agentes com modelo fixado no frontmatter (planner/architect=opus, builder/reviewer=sonnet, explorer/shipper=haiku) | v0.1 | ✅ entregue |
 | FR-3 | Skills `/story`, `/gate`, `/sdc`, `/spec`, `/economia` operacionais | v0.1 | ✅ entregue (piloto pendente) |
-| FR-4 | Hook `push-authority`: `git push`/`gh pr` bloqueados fora do shipper (`FORGE_ACTIVE_AGENT=shipper`) | v0.1 | ✅ entregue e testado |
-| FR-5 | **Validador estrutural** (`scripts/validate.cjs`): confere plugin.json, frontmatter de agents/skills, hooks.json e sintaxe dos hooks; exit ≠ 0 em violação | v0.2 | a implementar |
-| FR-6 | **Hook gate-enforcer**: bloqueia push se a story em entrega não tem veredito PASS/CONCERNS na seção Gate | v0.2 | a implementar |
-| FR-7 | **Skill `/onboarding`**: bootstrap de projeto de cliente — copia templates de gestão, cria `docs/stories/`, gera CLAUDE.md mínimo do projeto | v0.2 | a implementar |
+| FR-4 | Hook `push-authority`: `git push`, `gh pr create/merge` e `gh api` de criação/merge de PR bloqueados fora do shipper, em **Bash e PowerShell**. Autoridade pela identidade real do agente (`agent_type` do payload do hook), não por texto no comando. Detecção cobre variações do git (`-C`, `-c`, `git.exe`) sem falso positivo (`git stash push`) | v0.1 → v0.3 | endurecimento na STORY-2.1 |
+| FR-5 | **Validador estrutural** (`scripts/validate.cjs`): confere plugin.json, frontmatter de agents/skills, hooks.json e sintaxe dos hooks; exit ≠ 0 em violação. **Suíte de contorno** (`scripts/test-hooks.cjs`): casos de bypass conhecidos com exit 0/2 esperado, verde antes de cada entrega | v0.2 → v0.3 | ✅ validador entregue; suíte na STORY-2.1 |
+| FR-6 | **Hook gate-enforcer**: bloqueia push se a story do commit HEAD (`[STORY-x.y]` no assunto) não tem `**Veredito: PASS\|CONCERNS**` na seção Gate | v0.2 → v0.3 | endurecimento na STORY-2.1 |
+| FR-7 | **Skill `/onboarding`**: bootstrap de projeto de cliente — copia templates de gestão, cria `docs/stories/`, gera CLAUDE.md mínimo do projeto | v0.2 | ✅ entregue (piloto pendente) |
 | FR-8 | `/economia` emite relatório em Markdown com tabela de overhead, duplicações e plano de correção priorizado | v0.1 | ✅ entregue (piloto pendente) |
 | FR-9 | Piloto documentado: fluxo `/story` → `/sdc` → `/gate` completo num projeto de teste | v0.3 | a executar |
 
@@ -78,5 +78,5 @@ Consultores da 360IA entregam projetos de cliente com **método auditável** (st
 |---|---|---|
 | v0.1 | Scaffold (entregue 11/07/2026) | arquivos validados por sintaxe |
 | v0.2 | FR-1, FR-5, FR-6, FR-7 — stories 1.1–1.3 | validador verde + hooks testados |
-| v0.3 | FR-9 piloto + correções do uso real | piloto documentado em docs/ |
+| v0.3 | FR-9 piloto + endurecimento FR-4/FR-5/FR-6 (STORY-2.1) | piloto documentado em docs/ |
 | v1.0 | Estabilização + decisão de repositório remoto | 2 projetos reais usando |
