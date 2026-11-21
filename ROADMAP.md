@@ -16,6 +16,8 @@
 | 2026-07-12 | **Release v0.2 fechada** — Épico 1 completo (1.1+1.2+1.3); método validado por dogfooding (cadeia builder→reviewer→shipper + governança push-authority/gate-enforcer rodando sobre o próprio plugin) |
 | 2026-11-18 | Revisão completa do plugin (validador 20/20; hooks testados com payloads de borda — 5 furos de governança confirmados) |
 | 2026-11-18 | **STORY-2.1** criada e validada (Ready, 9/10): endurecimento dos hooks — autoridade por `agent_type`, Bash+PowerShell, detecção robusta, gate pela story do HEAD, veredito ancorado, suíte `scripts/test-hooks.cjs` |
+| 2026-11-20 | **STORY-2.2** criada e validada (Ready, 9/10): hook `context-meter` alerta 50/75/95% da janela de contexto e recomenda fechamento de janela; PRD ganha FR-10 (v0.3) |
+| 2026-11-20 | **STORY-2.2** entregue (gate CONCERNS, sem defeitos): hook `hooks/context-meter.cjs` (FR-10) — alerta 50/75/95% da janela de contexto via UserPromptSubmit+Stop, rearme após /compact, só recomenda fechamento de janela; suíte `scripts/test-context-meter.cjs` (39 casos); `validate.cjs` varre todos os eventos de hooks (21 verificações); plugin 0.3.0 |
 | 2026-11-18 | PRD: FR-4/FR-5/FR-6 reescritos no lugar (sem FR novo, para não duplicar regra); FR-7 marcado ✅; release v0.3 aponta a STORY-2.1 |
 
 ## 🔲 Pendente
@@ -23,6 +25,7 @@
 | Prioridade | Item | Dependências |
 |---|---|---|
 | 0 | Implementar STORY-2.1 (endurecimento da governança) | aprovação do Helder das decisões D-A..D-E |
+| 0 | Verificar canais de saída do context-meter em sessão real + revisitar lacunas L-1..L-4 da STORY-2.2 | próxima janela |
 | 1 | Piloto do fluxo SDC (FR-9, v0.3) em projeto de cliente | STORY-2.1 |
 | 3 | Piloto da skill /economia em projeto real | — |
 | 4 | Repositório remoto e versionamento de releases | decisão do Helder |
@@ -34,7 +37,7 @@
 - Hook de gate-enforcer: bloquear push se a story alvo não tem veredito PASS/CONCERNS registrado.
 - Avaliar suporte a `fable` como modelo opcional do planner para épicos longos (custo 2× opus — só sob demanda explícita).
 - `/economia` poderia gerar Artifact visual com o relatório para apresentação a cliente.
-- `validate.cjs`: `verificarHooks()` só varre `PreToolUse`. Quando um hook for registrado sob outro evento (`PostToolUse`, `Stop`…), generalizar a varredura para todos os eventos de `hooks.json` (existência + `node --check`). Observação do gate da STORY-1.1.
+- ✅ (STORY-2.2) `validate.cjs`: `verificarHooks()` só varre `PreToolUse`. Quando um hook for registrado sob outro evento (`PostToolUse`, `Stop`…), generalizar a varredura para todos os eventos de `hooks.json` (existência + `node --check`). Observação do gate da STORY-1.1.
 - `/onboarding`: o fallback de localização dos templates sem `${CLAUDE_PLUGIN_ROOT}` está descrito em alto nível — detalhar o passo a passo (via `claude plugin list`) quando validado num projeto de cliente real. Ressalva do gate da STORY-1.3.
 - `docs/economia.md`: adicionar alerta explícito de que **preço de Batch (−50%) ≠ preço padrão** — a auditoria mensal quase gerou falso positivo ao comparar preço padrão do arquivo com preço de Batch retornado por busca web. Ancorar sempre na página oficial de pricing (input/output padrão), não em resumos de busca. (Achado da auditoria de 2026-07-12.)
 - **Auditoria mensal 2026-08-01:** preços em `docs/economia.md` (Fable 5, Opus 4.8, Sonnet 5 promo/padrão, Haiku 4.5) conferidos contra `platform.claude.com/docs/en/about-claude/pricing` — **nenhuma divergência**, todos os valores batem exatamente. Nenhuma correção de preço foi necessária.

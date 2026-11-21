@@ -12,6 +12,8 @@
 
 ## Pendente (ordem de prioridade)
 
+- [ ] **Verificar na próxima janela (ressalva do gate da STORY-2.2):** (a) o aviso do context-meter aparece no terminal; (b) no 95% o Claude recebe a instrução e propõe o fechamento; (c) o aviso de fim de resposta (`Stop`) NÃO faz o Claude continuar sozinho. Se (c) falhar: `Stop` só marca pendência e o aviso sai no próximo prompt.
+- [ ] Revisitar lacunas provisórias da STORY-2.2: L-1 (heurística >200K ⇒ 1M), L-2 (rearme após /compact), L-3 (output_tokens na conta), L-4 (tmp sem limpeza)
 - [ ] Stories derivadas da revisão (fora da 2.1): reordenar commits do `/sdc` (builder commita antes do gate → conflita com commit único); separar arquivos internos (MEMORY, PLANO, ROADMAP, docs/) do que é distribuído ao cliente; caminho dos templates/docs do plugin nas skills `/story` e `/economia`; docs desatualizadas (plugin.json 0.1.0, README, MEMORY, docs/economia.md)
 - [ ] Piloto SDC completo em projeto de cliente (FR-9, release v0.3)
 - [ ] Piloto da skill /onboarding num projeto real (validar fallback de templates sem `${CLAUDE_PLUGIN_ROOT}`)

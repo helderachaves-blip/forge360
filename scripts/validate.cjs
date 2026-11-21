@@ -155,16 +155,16 @@ function verificarHooks() {
   ok(rel);
 
   // Extrai caminhos de arquivos .cjs/.js dos comandos registrados.
-  const grupos = (json.hooks && json.hooks.PreToolUse) || [];
-  const referenciados = [];
+  // STORY-2.2 AC-2: varre todos os eventos e deduplica por caminho.
+  const grupos = Object.values(json.hooks || {}).flat();
+  const referenciados = new Set();
   for (const grupo of grupos) {
-    for (const h of grupo.hooks || []) {
+    for (const h of (grupo && grupo.hooks) || []) {
       const cmd = (h && h.command) || '';
-      const matches = cmd.match(/[^\s"']+\.c?js/g) || [];
-      referenciados.push(...matches);
+      (cmd.match(/[^\s"']+\.c?js/g) || []).forEach((m) => referenciados.add(m));
     }
   }
-  if (referenciados.length === 0) {
+  if (referenciados.size === 0) {
     falha('hooks/hooks.json', 'nenhum arquivo de hook referenciado nos comandos');
     return;
   }

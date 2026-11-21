@@ -30,9 +30,10 @@ forge360/
 │   ├── economia/SKILL.md          # auditoria de custo de contexto
 │   └── onboarding/SKILL.md        # (v0.2, FR-7) bootstrap de projeto de cliente
 ├── hooks/
-│   ├── hooks.json                 # registro PreToolUse → matcher Bash
+│   ├── hooks.json                 # registro PreToolUse (matcher Bash) + UserPromptSubmit/Stop
 │   ├── push-authority.cjs         # Art. II — bloqueia push fora do shipper (exit 2)
-│   └── gate-enforcer.cjs          # (v0.2, FR-6) bloqueia push sem gate PASS/CONCERNS
+│   ├── gate-enforcer.cjs          # (v0.2, FR-6) bloqueia push sem gate PASS/CONCERNS
+│   └── context-meter.cjs          # (v0.3, FR-10) avisa a ocupação da janela em 50/75/95%
 ├── scripts/
 │   └── validate.cjs               # (v0.2, FR-5) validador estrutural do plugin
 ├── templates/
@@ -56,8 +57,9 @@ forge360/
 - Skills orquestram agents via subagent dispatch; nunca executam papel de outro agente no contexto principal.
 
 ### Hooks (governança determinística)
-- `hooks.json` registra todos em `PreToolUse` matcher `Bash`. Cada hook: lê JSON do stdin, decide, `exit 0` (permite) ou `exit 2` + stderr (bloqueia com mensagem ao agente).
+- `hooks.json` registra `PreToolUse` (governança de push, matcher `Bash`) e `UserPromptSubmit`/`Stop` (medidor de contexto). Cada hook de governança: lê JSON do stdin, decide, `exit 0` (permite) ou `exit 2` + stderr (bloqueia com mensagem ao agente).
 - **Padrões obrigatórios:** Node stdlib puro (NFR-1); tolerante a payload ilegível (permite em caso de dúvida de parse — hook nunca pode travar trabalho legítimo não-relacionado); rápido no caminho feliz (NFR-5).
+- Medidor de contexto (`context-meter.cjs`): só avisa, nunca bloqueia (sem exit 2/decision/continue:false); no `Stop` emite só `systemMessage`; estado dos marcos em `os.tmpdir()/forge360-context-meter/<session_id>.json`; falha = exit 0 e stdout vazio.
 - Autoridade de push: sinal = prefixo `FORGE_ACTIVE_AGENT=shipper` no comando (mesmo padrão do hook AIOX que o Helder já usa com `AIOX_ACTIVE_AGENT=devops`).
 
 ### Validador estrutural (`scripts/validate.cjs`, FR-5)
@@ -75,6 +77,7 @@ forge360/
 | D-4 | Claude Code only | portabilidade multi-IDE era o maior peso morto do AIOX |
 | D-5 | Sinal de autoridade via prefixo env no comando | compatível com o hábito já treinado do usuário (AIOX_ACTIVE_AGENT) |
 | D-6 | Stories do próprio forge360 em docs/stories/ | dogfooding: o método constrói a si mesmo |
+| D-7 | Medidor de contexto via UserPromptSubmit+Stop, só avisa, estado no tmp do SO | FR-10 / Art. IV; nunca trava trabalho, nada gravado em árvore de projeto (CON-3) |
 
 ## Fluxo canônico (SDC)
 

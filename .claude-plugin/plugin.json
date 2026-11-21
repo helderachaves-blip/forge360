@@ -1,6 +1,6 @@
 {
   "name": "forge360",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "Método enxuto de desenvolvimento orientado a stories para Claude Code — destilado do AIOX, com economia de tokens por design. CONSULTORIA 360IA.",
   "author": {
     "name": "Consultoria 360IA"

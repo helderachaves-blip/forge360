@@ -15,12 +15,14 @@ Plugin nativo do Claude Code com o método de desenvolvimento da CONSULTORIA 360
 
 ## Stack
 
-- Plugin Claude Code puro: Markdown (agents/skills/templates) + 1 hook Node (`hooks/push-authority.cjs`). Sem dependências npm.
+- Plugin Claude Code puro: Markdown (agents/skills/templates) + hooks Node (`push-authority`, `gate-enforcer`, `context-meter`). Sem dependências npm.
 
 ## Arquitetura
 
 - **6 agentes** com modelo fixado no frontmatter: planner (opus), architect (opus), builder (sonnet), reviewer (sonnet), explorer (haiku), shipper (haiku).
 - **5 skills:** story, gate, sdc, spec, economia.
+- **Medidor de contexto (FR-10):** hook `context-meter` em UserPromptSubmit+Stop alerta 50/75/95% da janela; base 200K, heurística >200K ⇒ 1M, override `FORGE_CONTEXT_WINDOW`; estado em `os.tmpdir()/forge360-context-meter/`.
+- **Instalação real:** o Claude Code roda a cópia em cache (`~/.claude/plugins/cache/forge360/forge360/<versão>`). Mudança só chega aos projetos após subir `version` no plugin.json + `claude plugin marketplace update forge360` + `claude plugin update forge360@forge360` + nova sessão.
 - **Governança:** hook PreToolUse bloqueia `git push`/`gh pr` sem `FORGE_ACTIVE_AGENT=shipper`.
 - **Constituição:** 6 artigos (constitution.md). Art. IV = Economia por Design; Art. VI = Modelo 1.
 
