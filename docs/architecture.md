@@ -35,7 +35,9 @@ forge360/
 │   ├── gate-enforcer.cjs          # (v0.2, FR-6) bloqueia push sem gate PASS/CONCERNS
 │   └── context-meter.cjs          # (v0.3, FR-10) avisa a ocupação da janela em 50/75/95%
 ├── scripts/
-│   └── validate.cjs               # (v0.2, FR-5) validador estrutural do plugin
+│   ├── validate.cjs               # (v0.2, FR-5) validador estrutural do plugin
+│   ├── statusline.cjs             # (v0.3.1, FR-10b) status line: ocupação da janela com cor por faixa
+│   └── statusline-launcher.cjs    # lançador de caminho estável (copiado 1x p/ ~/.claude)
 ├── templates/
 │   ├── story.md                   # story hiperdetalhada + checklist de 10 pontos
 │   └── gestao/                    # MEMORY / PLANO_DE_ACAO / ROADMAP para clientes
@@ -60,11 +62,12 @@ forge360/
 - `hooks.json` registra `PreToolUse` (governança de push, matcher `Bash`) e `UserPromptSubmit`/`Stop` (medidor de contexto). Cada hook de governança: lê JSON do stdin, decide, `exit 0` (permite) ou `exit 2` + stderr (bloqueia com mensagem ao agente).
 - **Padrões obrigatórios:** Node stdlib puro (NFR-1); tolerante a payload ilegível (permite em caso de dúvida de parse — hook nunca pode travar trabalho legítimo não-relacionado); rápido no caminho feliz (NFR-5).
 - Medidor de contexto (`context-meter.cjs`): só avisa, nunca bloqueia (sem exit 2/decision/continue:false); no `Stop` emite só `systemMessage`; estado dos marcos em `os.tmpdir()/forge360-context-meter/<session_id>.json`; falha = exit 0 e stdout vazio.
+- Status line (`scripts/statusline.cjs`): não é hook; opt-in via `settings.json` do usuário + lançador estável (`statusline-launcher.cjs`, copiado uma vez). Lê o payload da status line, não grava estado, falha = stdout vazio e exit 0.
 - Autoridade de push: sinal = prefixo `FORGE_ACTIVE_AGENT=shipper` no comando (mesmo padrão do hook AIOX que o Helder já usa com `AIOX_ACTIVE_AGENT=devops`).
 
 ### Validador estrutural (`scripts/validate.cjs`, FR-5)
 - Roda local (`node scripts/validate.cjs`) e futuramente em CI.
-- Checa: JSON válidos; agents com frontmatter completo e `model` ∈ {haiku, sonnet, opus, fable}; skills com `name`/`description`; hooks referenciados em hooks.json existem e passam `node --check`; templates presentes.
+- Checa: JSON válidos; agents com frontmatter completo e `model` ∈ {haiku, sonnet, opus, fable}; skills com `name`/`description`; hooks referenciados em hooks.json existem e passam `node --check`; scripts da status line existem e passam `node --check`; templates presentes.
 - Saída: relatório por item + exit ≠ 0 em qualquer violação (usável como gate de commit).
 
 ## Decisões registradas
@@ -78,6 +81,7 @@ forge360/
 | D-5 | Sinal de autoridade via prefixo env no comando | compatível com o hábito já treinado do usuário (AIOX_ACTIVE_AGENT) |
 | D-6 | Stories do próprio forge360 em docs/stories/ | dogfooding: o método constrói a si mesmo |
 | D-7 | Medidor de contexto via UserPromptSubmit+Stop, só avisa, estado no tmp do SO | FR-10 / Art. IV; nunca trava trabalho, nada gravado em árvore de projeto (CON-3) |
+| D-8 | Status line de contexto via payload oficial + lançador de caminho estável copiado uma vez | FR-10(b) / Art. IV (zero tokens); `${CLAUDE_PLUGIN_ROOT}` não expande em `statusLine`, e o diretório de cache muda a cada versão; hook `context-meter` mantido (95% fala com o modelo) |
 
 ## Fluxo canônico (SDC)
 

@@ -38,7 +38,7 @@ Consultores da 360IA entregam projetos de cliente com **método auditável** (st
 | FR-7 | **Skill `/onboarding`**: bootstrap de projeto de cliente — copia templates de gestão, cria `docs/stories/`, gera CLAUDE.md mínimo do projeto | v0.2 | ✅ entregue (piloto pendente) |
 | FR-8 | `/economia` emite relatório em Markdown com tabela de overhead, duplicações e plano de correção priorizado | v0.1 | ✅ entregue (piloto pendente) |
 | FR-9 | Piloto documentado: fluxo `/story` → `/sdc` → `/gate` completo num projeto de teste | v0.3 | a executar |
-| FR-10 | **Hook `context-meter`**: alerta o consumo da janela de contexto da sessão em 50%, 75% e 95%, cada marco uma única vez por sessão, via `UserPromptSubmit` + `Stop`. Base automática (200K; 1M quando a sessão indicar; override `FORGE_CONTEXT_WINDOW`). No 95% só **recomenda** o fechamento de janela (gestão + commit único + push pelo shipper + nova janela) — nada é executado automaticamente. Nunca bloqueia; estado fora do projeto (CON-3) | v0.3 | ✅ entregue (STORY-2.2, gate CONCERNS) |
+| FR-10 | **Medidor de contexto** em dois canais. **(a) Hook `context-meter`**: alerta o consumo da janela de contexto da sessão em 50%, 75% e 95%, cada marco uma única vez por sessão, via `UserPromptSubmit` + `Stop`. Base automática (200K; 1M quando a sessão indicar; override `FORGE_CONTEXT_WINDOW`). No 95% só **recomenda** o fechamento de janela (gestão + commit único + push pelo shipper + nova janela) — nada é executado automaticamente. Nunca bloqueia; estado fora do projeto (CON-3). **(b) Status line** (`scripts/statusline.cjs`, ativação opt-in pelo usuário no `settings.json` via lançador de caminho estável): mostra continuamente a ocupação da janela no rodapé, a partir do payload da status line, com cor por faixa — verde < 50%, amarelo 50–< 75%, laranja 75–< 95%, vermelho ≥ 95%; respeita `FORGE_CONTEXT_WINDOW` e `NO_COLOR`; zero tokens no contexto do modelo; não grava estado | v0.3 | (a) ✅ entregue (STORY-2.2, gate CONCERNS); (b) ✅ entregue (STORY-2.3, v0.3.1; verificação visual no rodapé pendente) |
 
 ## 5. Requisitos Não-Funcionais
 
@@ -62,7 +62,7 @@ Consultores da 360IA entregam projetos de cliente com **método auditável** (st
 ## 7. Fora de escopo (v1.0)
 
 - Suporte a outras IDEs/CLIs (Gemini, Codex, Cursor) — o forge360 é Claude Code only, por decisão.
-- Dashboard/UI de observabilidade.
+- Dashboard/UI de observabilidade. (A status line do FR-10(b) não conta como dashboard: é uma linha de texto local, sem estado nem histórico — aprovada pelo Helder em 2026-11-22.)
 - Marketplace público do plugin (decisão futura do Helder).
 - Squads de domínio não-dev (escrita criativa etc.).
 
@@ -79,5 +79,5 @@ Consultores da 360IA entregam projetos de cliente com **método auditável** (st
 |---|---|---|
 | v0.1 | Scaffold (entregue 11/07/2026) | arquivos validados por sintaxe |
 | v0.2 | FR-1, FR-5, FR-6, FR-7 — stories 1.1–1.3 | validador verde + hooks testados |
-| v0.3 | FR-9 piloto + endurecimento FR-4/FR-5/FR-6 (STORY-2.1) + FR-10 medidor de contexto (STORY-2.2) | piloto documentado em docs/ |
+| v0.3 | FR-9 piloto + endurecimento FR-4/FR-5/FR-6 (STORY-2.1) + FR-10 medidor de contexto (STORY-2.2 hook; STORY-2.3 status line) | piloto documentado em docs/ |
 | v1.0 | Estabilização + decisão de repositório remoto | 2 projetos reais usando |

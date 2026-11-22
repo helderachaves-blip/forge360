@@ -185,6 +185,24 @@ function verificarHooks() {
   }
 }
 
+// ── STORY-2.3 AC-10: scripts da status line (existência + sintaxe) ──────────
+function verificarScripts() {
+  for (const rel of ['scripts/statusline.cjs', 'scripts/statusline-launcher.cjs']) {
+    const abs = path.join(ROOT, rel);
+    if (!fs.existsSync(abs)) {
+      falha(`${rel} (node --check)`, 'script obrigatório ausente');
+      continue;
+    }
+    try {
+      execFileSync(process.execPath, ['--check', abs], { stdio: 'pipe' });
+      ok(`${rel} (node --check)`);
+    } catch (e) {
+      const msg = (e.stderr && e.stderr.toString().trim().split('\n').slice(-1)[0]) || e.message;
+      falha(`${rel} (node --check)`, msg);
+    }
+  }
+}
+
 // ── AC-6: templates ──────────────────────────────────────────────────────────
 function verificarTemplates() {
   const obrigatorios = [
@@ -205,6 +223,7 @@ function main() {
   verificarAgents();
   verificarSkills();
   verificarHooks();
+  verificarScripts();
   verificarTemplates();
 
   console.log('forge360 — validação estrutural\n');
